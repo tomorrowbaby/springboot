@@ -1,7 +1,11 @@
 package com.example.demo;
 
+import com.example.demo.activemq.Producer;
+import com.example.demo.async.Async;
+import com.example.demo.mail.SendJunkMailService;
 import com.example.demo.po.User ;
 import com.example.demo.service.UserService;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -9,19 +13,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
+
 
 import javax.annotation.Resource;
+import javax.jms.Destination;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,6 +39,12 @@ public class FirstprojectApplicationTests {
 	private RedisTemplate redisTemplate ;
 	@Resource
 	private StringRedisTemplate stringRedisTemplate ;
+	@Resource
+	SendJunkMailService sendJunkMailService ;
+	@Resource
+	Producer producer ;
+	@Resource
+	Async async ;
 	/**
 	 * Mybatis集成测试
 	 */
@@ -81,7 +92,6 @@ public class FirstprojectApplicationTests {
 		//按姓名查询
 		List<User> userList1 = userService.findByName("唐伯虎");
 		System.out.println("findByName() :"+userList1);
-		Assert.isTrue(userList1.get(0).getName().equals("唐伯虎"),"数据错误");
 
 		//根据Ｉｄ查询
 		User user = userService.findById("1") ;
@@ -158,5 +168,61 @@ public class FirstprojectApplicationTests {
 	}
 
 
+	/**
+	 * 描述：Email发送测试
+	 */
+	@Test
+	public void testEmail() {
+		sendJunkMailService.sendJunKMail() ;
+	}
+
+	/**
+	 * 描述：ActiveMQ 测试
+	 */
+	@Test
+	public void testActiveMQ() {
+		Destination destination = new ActiveMQQueue("activemq.queue") ;
+		producer.sendMessage(destination,"ActiveMQ测试消息");
+	}
+
+
+	/**
+	 * 描述：Async测试-普通方法运行时间
+	 */
+	@Test
+	public void testNormal() {
+		long startTime = System.currentTimeMillis() ;
+		System.out.println("第一次执行任务---");
+		async.task() ;
+		System.out.println("第二次执行任务---");
+		async.task() ;
+		System.out.println("第三次执行任务---");
+		async.task() ;
+		long endTime = System.currentTimeMillis() ;
+		long time = endTime - startTime ;
+		System.out.println("普通方法花费时间："+time);
+	}
+
+	/**
+	 * 描述： Async测试 - Async方法运行时间
+	 * @throws Exception
+	 */
+	@Test
+	public void testAsync() throws Exception {
+		long startTime = System.currentTimeMillis() ;
+		System.out.println("第一次执行任务---");
+		async.taskAsync();
+		System.out.println("第二次执行任务---");
+		async.taskAsync();
+		System.out.println("第三次执行任务---");
+		async.taskAsync();
+		while (true){
+			if (async.flag == 3) break;
+			else Thread.sleep(3);
+		}
+		long endTime = System.currentTimeMillis() ;
+		long time = endTime - startTime ;
+		System.out.println("Async方法花费总时间时间："+time);
+	}
 
 }
