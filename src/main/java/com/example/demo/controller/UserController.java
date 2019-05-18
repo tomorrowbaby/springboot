@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.error.BusinessException;
 import com.example.demo.po.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,20 @@ public class UserController {
         model.addAttribute("users",userList) ;
         return "User" ;
     }
+
+    @RequestMapping("/findAll")
+    public String findAll(Model model){
+        List<User> userList = userService.findAll() ;
+        model.addAttribute("users",userList) ;
+        throw new BusinessException("业务异常") ;
+
+    }
+
+    @RequestMapping("/testRetry")
+    public  String testRetry() {
+        User user =
+                userService.findByNameAndPasswordRetry("唐伯虎","秋香") ;
+        return "success" ;
+    }
+
 }

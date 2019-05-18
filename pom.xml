@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!--排除依赖SPring Boot默认的日志依赖-->
+			<!--	排除依赖SPring Boot默认的日志依赖	-->
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
@@ -37,72 +37,84 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--Mysql连接Java的驱动程序-->
+		<!--	Mysql连接Java的驱动程序	-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<!--Jdbc-->
+		<!--	Jdbc	-->
 		<dependency>
 			<groupId> org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
-		<!--Mybatis-->
+		<!--	Mybatis	-->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>1.3.1</version>
 		</dependency>
 
-		<!--Druid-->
+		<!--	Druid	-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.1.4</version>
 		</dependency>
 
-		<!--Spring Data JPA-->
+		<!--	Spring Data JPA	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!--Thymeleaf-->
+		<!--	Thymeleaf	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-		<!--Redis-->
+		<!--	Redis	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
-		<!--log4j-->
+		<!--	log4j	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 
-		<!--quartz定时器-->
+		<!--	quartz定时器	-->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 		</dependency>
 
-		<!-- mail-->
+		<!--	mail	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-		<!--ActiveMQ-->
+		<!--	ActiveMQ	-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
+		</dependency>
+
+		<!--	Retry	-->
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+			<version>1.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.6</version>
 		</dependency>
 
 	</dependencies>

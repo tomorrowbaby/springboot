@@ -23,7 +23,7 @@ public class SendMailQuartz {
     private static final Logger logger = LogManager.getLogger(SendMailQuartz.class) ;
 
 
-    @Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void testQuartz(){
         logger.info("Quartz运行");
     }

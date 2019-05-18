@@ -57,9 +57,17 @@ public interface UserService {
     Page<User> findAll(Pageable pageable) ;
 
     /**
-     * 通过姓名查询
+     * 描述：通过姓名查询
      * @param name
      * @return
      */
     List<User> findByName(String name) ;
+
+    /**
+     * 描述：查找-重连
+     * @param name
+     * @param password
+     * @return
+     */
+    User findByNameAndPasswordRetry(String name ,String password) ;
 }

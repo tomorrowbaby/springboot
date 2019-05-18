@@ -7,6 +7,8 @@ import com.example.demo.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -116,5 +118,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findByName(String name) {
         return userRepository.findByName(name);
+    }
+
+    /**
+     * 描述：查找-重连
+     * @param name
+     * @param password
+     * @return
+     */
+    @Override
+    @Retryable(value={ArithmeticException.class},
+            maxAttempts = 5,
+            backoff = @Backoff(
+                    delay = 5000,
+                    multiplier = 2
+            ))
+    public User findByNameAndPasswordRetry(String name, String password) {
+        System.out.println("查找失败");
+        int a = 10/0 ;
+        return null;
     }
 }
