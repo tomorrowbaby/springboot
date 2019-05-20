@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> findByName(String name) {
-        return userRepository.findByName(name);
+    public User findByUserName(String name) {
+        return userDao.findByUserName(name);
     }
 
     /**
@@ -138,4 +138,6 @@ public class UserServiceImpl implements UserService {
         int a = 10/0 ;
         return null;
     }
+
+
 }

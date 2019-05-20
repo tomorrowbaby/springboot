@@ -2,13 +2,17 @@ package com.example.demo;
 
 import com.example.demo.activemq.Producer;
 import com.example.demo.async.Async;
+import com.example.demo.dao.UserDao;
 import com.example.demo.mail.SendJunkMailService;
+import com.example.demo.model.UserAttachementRel;
 import com.example.demo.po.User ;
+import com.example.demo.service.UserAttachementReqService;
 import com.example.demo.service.UserService;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,12 +49,18 @@ public class FirstprojectApplicationTests {
 	Producer producer ;
 	@Resource
 	Async async ;
+	@Resource
+	UserAttachementReqService userAttachementReqService ;
+	@Autowired
+	UserDao userDao ;
+
+
 	/**
 	 * Mybatis集成测试
 	 */
 	@Test
 	public void userTest(){
-		User user = userService.findByNameAndPassword("唐伯虎","123456") ;
+		User user = userDao.findByUserName("秋香");
 		System.out.println(user);
 	}
 
@@ -89,11 +99,8 @@ public class FirstprojectApplicationTests {
 		List<User> userList = userService.findAll() ;
 		System.out.println("findAll() :"+userList);
 
-		//按姓名查询
-		List<User> userList1 = userService.findByName("唐伯虎");
-		System.out.println("findByName() :"+userList1);
 
-		//根据Ｉｄ查询
+		//根据Ｉｄ查询3
 		User user = userService.findById("1") ;
 		System.out.println("findById() :"+user);
 
@@ -223,6 +230,20 @@ public class FirstprojectApplicationTests {
 		long endTime = System.currentTimeMillis() ;
 		long time = endTime - startTime ;
 		System.out.println("Async方法花费总时间时间："+time);
+	}
+
+	/**
+	 * MongoDB测试
+	 */
+	@Test
+	public void testMongoDB() {
+		UserAttachementRel userAttachementRel= new UserAttachementRel() ;
+		userAttachementRel.setId("1");
+		userAttachementRel.setUserId("1");
+		userAttachementRel.setFileName("个人简历.doc");
+		userAttachementReqService.save(userAttachementRel) ;
+		System.out.println("保存成功");
+
 	}
 
 }

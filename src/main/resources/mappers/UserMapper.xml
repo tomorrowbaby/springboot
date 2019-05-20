@@ -5,15 +5,22 @@
 <mapper namespace="com.example.demo.dao.UserDao">
 
     <resultMap id="UserResultMap" type="com.example.demo.po.User">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="password" property="password" />
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="findByNameAndPassword" parameterType="String" resultMap="UserResultMap">
         select * from user_test
             <where>
                 name = #{name}
                 and password = #{password}
+            </where>
+    </select>
+
+    <select id="findByUserName" parameterType="String" resultType="com.example.demo.po.User">
+        select id,name,password from user_test
+            <where>
+                name = #{name}
             </where>
     </select>
 </mapper>

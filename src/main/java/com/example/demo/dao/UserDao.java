@@ -20,4 +20,7 @@ public interface UserDao {
      */
     // @Select("SELECT * FROM user_test WHERE user_name = #{name}")
      public User findByNameAndPassword(@Param("name") String name, @Param("password") String password) ;
+
+
+     public User findByUserName(String name) ;
 }

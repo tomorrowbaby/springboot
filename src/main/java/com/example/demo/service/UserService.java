@@ -58,10 +58,10 @@ public interface UserService {
 
     /**
      * 描述：通过姓名查询
-     * @param name
+     * @param userName
      * @return
      */
-    List<User> findByName(String name) ;
+    User findByUserName(String userName) ;
 
     /**
      * 描述：查找-重连
@@ -70,4 +70,6 @@ public interface UserService {
      * @return
      */
     User findByNameAndPasswordRetry(String name ,String password) ;
+
+
 }

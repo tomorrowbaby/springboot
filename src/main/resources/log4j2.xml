@@ -19,7 +19,7 @@
     </appenders>
 
     <loggers>
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
         </root>
