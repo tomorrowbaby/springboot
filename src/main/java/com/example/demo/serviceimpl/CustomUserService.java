@@ -5,6 +5,7 @@ import com.example.demo.po.UserRole;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserRoleService;
 import com.example.demo.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,7 +46,7 @@ public class CustomUserService implements UserDetailsService {
         List<UserRole> userRoleList = userRoleService.findByUserId(user.getId()) ;
         //4.创建身份识别的列表
         List<GrantedAuthority> authorityList = new ArrayList<GrantedAuthority>() ;
-            if (authorityList != null && authorityList.size() > 0){
+            if (userRoleList != null && userRoleList.size() > 0){
                 for (UserRole role:
                      userRoleList) {
                     //5. 获得用户关联的身份名称
@@ -55,6 +56,7 @@ public class CustomUserService implements UserDetailsService {
                 }
             }
         //7.返回一个用户的完整的认证信息：用户名，密码，身份信息
+        System.out.println(authorityList.get(0).getAuthority().toString());
         return new org.springframework.security.core.userdetails.User(user.getName(),user.getPassword(),authorityList);
     }
 }
